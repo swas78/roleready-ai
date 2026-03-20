@@ -1,0 +1,159 @@
+<link rel="stylesheet" href="/css/demo.css" />
+
+<div class="demo-page">
+
+  <!-- TOP BAR -->
+  <header class="top-bar">
+    <a href="/analyze" class="btn-back">← Analyze</a>
+    <h1 class="logo">Demo Profiles — RoleReady AI</h1>
+    <div class="top-bar-right">
+      <span class="pill pill-muted filter-btn" data-filter="tech">TECH</span>
+      <span class="pill pill-muted filter-btn" data-filter="ops">OPS</span>
+    </div>
+  </header>
+
+  <!-- HERO SECTION -->
+  <section class="demo-hero">
+    <h1 class="hero-title">COMPARE LEARNING PATHS</h1>
+    <p class="hero-subtitle">See how RoleReady AI creates a unique roadmap for every experience level</p>
+    <div class="hero-stats">
+      <span class="stat-highlight">3 profiles analysed</span>
+      <span class="stat-dot">·</span>
+      <span class="stat-highlight">real backend data</span>
+      <span class="stat-dot">·</span>
+      <span class="stat-highlight">live gap detection</span>
+    </div>
+  </section>
+
+  <!-- THREE COLUMN COMPARISON GRID -->
+  <main class="demo-grid">
+    
+    <% const cardData = [
+      { key: 'senior', name: 'SENIOR ENGINEER', accent: '#c8ff00', meta: '8 years experience · Tech domain', data: profiles.senior },
+      { key: 'fresher', name: 'FRESH GRADUATE', accent: '#ff6b6b', meta: '0 years experience · Tech domain', data: profiles.fresher },
+      { key: 'ops', name: 'OPERATIONS WORKER', accent: '#534AB7', meta: '5 years experience · Ops domain', data: profiles.ops }
+    ]; %>
+
+    <% cardData.forEach(card => { 
+        const gapCount = card.data.gap_object ? card.data.gap_object.missing.length : 0;
+        const totalHours = card.data.roadmap.reduce((a,m) => a + m.duration_hours, 0);
+        const topGaps = card.data.gap_object ? card.data.gap_object.missing.slice(0,3) : [];
+        const firstModule = card.data.roadmap[0] || null;
+    %>
+    <div class="persona-card" style="--card-accent: <%= card.accent %>" data-profile="<%= card.key %>" data-domain="<%= card.data.domain %>">
+      <h2 class="persona-name"><span class="accent-dot"></span><%= card.name %></h2>
+      <p class="persona-meta"><%= card.meta %></p>
+
+      <div class="ring-container">
+        <svg width="100" height="100" viewBox="0 0 100 100">
+          <circle cx="50" cy="50" r="40" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="6"/>
+          <circle cx="50" cy="50" r="40" fill="none"
+            stroke="var(--card-accent)" stroke-width="6"
+            stroke-linecap="round"
+            stroke-dasharray="251.2"
+            stroke-dashoffset="251.2"
+            transform="rotate(-90 50 50)"
+            class="ring-arc" data-score="<%= card.data.readiness_score %>"/>
+          <text x="50" y="46" text-anchor="middle" font-family="Syne" font-size="16" font-weight="800" fill="var(--text-primary)"><%= card.data.readiness_score %>%</text>
+          <text x="50" y="60" text-anchor="middle" font-family="DM Mono" font-size="7" fill="var(--text-secondary)">READINESS</text>
+        </svg>
+      </div>
+
+      <div class="card-stats">
+        <div class="card-stat">
+          <span class="stat-num"><%= card.data.roadmap.length %></span>
+          <span class="stat-label">MODULES</span>
+        </div>
+        <div class="card-stat">
+          <span class="stat-num"><%= totalHours %>h</span>
+          <span class="stat-label">LEARNING</span>
+        </div>
+        <div class="card-stat">
+          <span class="stat-num"><%= gapCount %></span>
+          <span class="stat-label">GAPS</span>
+        </div>
+      </div>
+
+      <div class="top-gaps-section">
+        <div class="section-label">TOP GAPS:</div>
+        <div class="gap-pills-mini">
+          <% topGaps.forEach(gap => { %>
+            <span class="pill-mini"><%= gap %></span>
+          <% }) %>
+          <% if(topGaps.length === 0) { %><span class="pill-muted-mini">None detected</span><% } %>
+        </div>
+      </div>
+
+      <% if(firstModule) { %>
+      <div class="first-module-section">
+        <div class="section-label">FIRST MODULE:</div>
+        <div class="first-module-title"><%= firstModule.title %> · <%= firstModule.duration_hours %>h</div>
+        <div class="first-module-reason line-clamp-2">"<%= firstModule.reason %>"</div>
+      </div>
+      <% } %>
+
+      <button class="view-roadmap-btn">▶ VIEW FULL ROADMAP</button>
+    </div>
+    <% }) %>
+  </main>
+
+  <!-- COMPARISON PROGRESS BAR COMPONENT -->
+  <section class="comparison-bar-section">
+    <div class="comparison-bar">
+      <h3 class="comparison-title">LEARNING PATH COMPARISON</h3>
+      <% cardData.forEach(card => { 
+        const totalHours = card.data.roadmap.reduce((a,m) => a + m.duration_hours, 0);
+      %>
+      <div class="bar-row">
+        <span class="bar-name"><%= card.name %></span>
+        <div class="bar-bg">
+          <div class="bar-fill" data-width="<%= card.data.readiness_score %>" style="background: <%= card.accent %>"></div>
+        </div>
+        <span class="bar-meta-score"><%= card.data.readiness_score %>%</span>
+        <span class="bar-meta-metric"><%= card.data.roadmap.length %> modules</span>
+        <span class="bar-meta-metric"><%= totalHours %>h</span>
+      </div>
+      <% }) %>
+    </div>
+  </section>
+
+  <!-- EXPANDED ROADMAP PANELS -->
+  <section class="expanded-panels-wrapper">
+    <% cardData.forEach(card => { 
+        const totalHours = card.data.roadmap.reduce((a,m) => a + m.duration_hours, 0);
+    %>
+    <div class="roadmap-panel" id="panel-<%= card.key %>">
+      <div class="panel-header">
+        <div class="panel-title-wrapper">
+          <h2 class="panel-hero-title" style="color: <%= card.accent %>"><%= card.name %> — FULL LEARNING PATH</h2>
+          <span class="pill" style="border-color: <%= card.accent %>; color: <%= card.accent %>"><%= card.data.readiness_score %>% readiness</span>
+        </div>
+        <p class="panel-subtitle"><%= card.data.roadmap.length %> modules · <%= totalHours %>h total · <%= card.data.time_saved_hours || 0 %>h saved vs generic onboarding</p>
+      </div>
+
+      <div class="panel-modules">
+        <% card.data.roadmap.forEach(m => { %>
+        <div class="roadmap-row">
+          <div class="row-order"><%= m.order %>.</div>
+          <div class="row-type"><span class="pill pill-<%= m.type %>"><%= m.type.toUpperCase() %></span></div>
+          <div class="row-content">
+            <div class="row-main">
+              <span class="row-title"><%= m.title %></span>
+              <span class="row-hours"><%= m.duration_hours %>h ──────►</span>
+            </div>
+            <div class="row-reason">Why: <%= m.reason %></div>
+          </div>
+        </div>
+        <% }) %>
+      </div>
+
+      <div class="panel-footer">
+        <button class="collapse-btn">← COLLAPSE</button>
+        <a href="/analyze" class="btn-cta" style="background: <%= card.accent %>; color: var(--bg);">→ TRY WITH YOUR OWN RESUME</a>
+      </div>
+    </div>
+    <% }) %>
+  </section>
+</div>
+
+<script src="/js/demo.js"></script>

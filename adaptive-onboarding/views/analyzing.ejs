@@ -1,0 +1,59 @@
+<div class="analyzing-wrap" style="position:relative; width: 100vw; height: 100vh; background: #0A0A0A; overflow: hidden; display:flex; flex-direction:column; align-items:center; justify-content:center; font-family: sans-serif;">
+    <svg class="orbit-bg" style="position:absolute; width:100%; height:100%; top:0; left:0; pointer-events:none;">
+        <circle class="arc-1" cx="50%" cy="50%" r="200" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="2" stroke-dasharray="100 20" style="animation: spin 20s linear infinite;" />
+        <circle class="arc-2" cx="50%" cy="50%" r="250" fill="none" stroke="rgba(131,56,236,0.2)" stroke-width="3" stroke-dasharray="150 50" style="animation: rspin 35s linear infinite;" />
+        <circle class="arc-3" cx="50%" cy="50%" r="300" fill="none" stroke="rgba(29,158,117,0.15)" stroke-width="1" stroke-dasharray="50 100" style="animation: spin 50s linear infinite;" />
+    </svg>
+    <style>
+        @keyframes spin { 100% { transform: rotate(360deg); transform-origin: 50% 50%; } }
+        @keyframes rspin { 100% { transform: rotate(-360deg); transform-origin: 50% 50%; } }
+        .step-row { display: flex; align-items: center; gap: 16px; margin-bottom: 24px; opacity: 0.3; transition: all 0.3s; }
+        .step-row.active { opacity: 1; transform: scale(1.05); }
+        .step-row.done { opacity: 0.6; }
+        .step-dot { width: 16px; height: 16px; border-radius: 50%; border: 2px solid #555; background: transparent; transition: all 0.3s; }
+        .step-row.active .step-dot { border-color: #8338ec; background: #8338ec; box-shadow: 0 0 10px #8338ec; }
+        .step-row.done .step-dot { border-color: #1d9e75; background: #1d9e75; }
+        .step-label { color: white; font-size: 18px; }
+        .analyze-error { margin-top: 40px; padding: 24px; background: rgba(255,0,0,0.1); border: 1px solid rgba(255,0,0,0.3); border-radius: 8px; text-align: center; }
+        .analyze-error h3 { color: #ff4d4d; margin-top: 0; }
+        .analyze-error p { color: white; }
+        .analyze-error a { display: inline-block; margin-top: 16px; padding: 10px 20px; background: white; color: black; text-decoration: none; border-radius: 4px; }
+    </style>
+
+    <div class="pipeline" style="z-index: 10;">
+        <div class="step-row step-0 done">
+            <div class="step-dot"></div>
+            <div class="step-label">Initializing Analysis Pipeline</div>
+        </div>
+        <div class="step-row step-1">
+            <div class="step-dot"></div>
+            <div class="step-label">Extracting Lexical Tokens</div>
+        </div>
+        <div class="step-row step-2">
+            <div class="step-dot"></div>
+            <div class="step-label">Embedding SBERT Vectors</div>
+        </div>
+        <div class="step-row step-3">
+            <div class="step-dot"></div>
+            <div class="step-label">Classifying Knowledge Gaps</div>
+        </div>
+        <div class="step-row step-4">
+            <div class="step-dot"></div>
+            <div class="step-label">Sorting NetworkX Skill Dependencies</div>
+        </div>
+        <div class="step-row step-5">
+            <div class="step-dot"></div>
+            <div class="step-label">Generating AI Reasoning Traces</div>
+        </div>
+    </div>
+    
+    <p class="status-text" style="color:#aaa; font-style:italic; margin-top:40px; z-index:10; font-size:14px;"></p>
+
+    <div class="analyze-error hidden" style="display:none; z-index:10;">
+        <h3>Error Occurred</h3>
+        <p class="error-msg"></p>
+        <a href="/analyze">Return to Analysis</a>
+    </div>
+</div>
+
+<script src="/js/analyzing.js"></script>

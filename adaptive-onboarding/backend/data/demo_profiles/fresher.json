@@ -1,0 +1,43 @@
+{
+    "candidate_skills": [
+        {"name": "HTML/CSS", "years": 1, "confidence": 75, "context": "College projects"},
+        {"name": "Basic JS", "years": 1, "confidence": 60, "context": "Simple interactive forms"},
+        {"name": "Git", "years": 1, "confidence": 80, "context": "Personal repo commits"}
+    ],
+    "required_skills": [
+        "React Fundamentals", "Advanced JavaScript Concepts", "Data Structures & Algorithms", "State Management"
+    ],
+    "gap_object": {
+        "known": [],
+        "partial": [],
+        "missing": ["React Fundamentals", "Advanced JavaScript Concepts", "Data Structures & Algorithms", "State Management"]
+    },
+    "readiness_score": 22,
+    "roadmap": [
+        {
+            "module_id": "c_tech_006",
+            "title": "Data Structures & Algorithms for Interviews",
+            "duration_hours": 40,
+            "type": "new",
+            "order": 1,
+            "reason": "The Job Description explicitly requires Data Structures & Algorithms, which were not detected in your resume. Note: Mastery of Data Structures & Algorithms relies on understanding Python Basics.",
+            "skills_covered": ["Data Structures & Algorithms"],
+            "domain": "tech",
+            "level": "intermediate"
+        },
+        {
+            "module_id": "c_tech_005",
+            "title": "Advanced JavaScript and React Ecosystem",
+            "duration_hours": 25,
+            "type": "new",
+            "order": 2,
+            "reason": "The Job Description explicitly requires Advanced JavaScript Concepts, React Fundamentals, State Management, which were not detected in your resume.",
+            "skills_covered": ["Advanced JavaScript Concepts", "React Fundamentals", "State Management"],
+            "domain": "tech",
+            "level": "intermediate"
+        }
+    ],
+    "time_saved_hours": 55,
+    "domain": "tech",
+    "initials": "JD"
+}

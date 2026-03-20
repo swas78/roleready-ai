@@ -1,0 +1,190 @@
+<link rel="stylesheet" href="/css/results.css" />
+
+<div class="dashboard">
+
+  <!-- Section 1: Top Bar -->
+  <header class="top-bar">
+    <a href="/analyze" class="btn-back">← New Analysis</a>
+    <h1 class="logo">RoleReady AI</h1>
+    <div class="top-bar-right">
+      <span class="pill pill-domain"><%= result.domain.toUpperCase() %></span>
+      <span class="pill pill-readiness"><span class="readiness-number-pill"><%= result.readiness_score %></span>% READINESS</span>
+    </div>
+  </header>
+
+  <!-- Section 2: Hero Stat Row -->
+  <section class="stat-row">
+    <div class="stat-card">
+      <div class="stat-label">READINESS SCORE</div>
+      <div class="stat-value"><span class="readiness-number">0</span><span class="stat-unit">%</span></div>
+      <div class="stat-progress-bg"><div class="stat-progress-fill readiness-bar-fill" data-width="<%= result.readiness_score %>"></div></div>
+    </div>
+    
+    <div class="stat-card">
+      <div class="stat-label">HOURS SAVED</div>
+      <div class="stat-value"><span class="hours-saved-number">0</span><span class="stat-unit">h</span></div>
+      <div class="stat-sub">vs 40h generic onboarding</div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-label">SKILL GAP</div>
+      <div class="stat-value"><%= (result.gap_object ? result.gap_object.missing.length : 0) + (result.gap_object ? result.gap_object.partial.length : 0) %> <span class="stat-title-small">gaps identified</span></div>
+      <div class="stat-sub"><%= result.gap_object ? result.gap_object.known.length : 0 %>/<%= ((result.gap_object ? result.gap_object.known.length : 0) + (result.gap_object ? result.gap_object.missing.length : 0) + (result.gap_object ? result.gap_object.partial.length : 0)) %> already mastered</div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-label">YOUR PATH</div>
+      <div class="stat-value"><%= result.roadmap.length %> <span class="stat-title-small">modules</span></div>
+      <div class="stat-sub"><%= result.roadmap.reduce((acc, m) => acc + m.duration_hours, 0) %>h total learning</div>
+    </div>
+  </section>
+
+  <!-- Section 3: Main Bento Grid -->
+  <main class="bento-grid">
+    
+    <!-- Left Column: Module Roadmap -->
+    <section class="bento-col bento-left bento-card card-roadmap">
+      <header class="card-header">
+        <h2 class="card-title">YOUR LEARNING ROADMAP</h2>
+        <span class="pill pill-muted"><%= result.roadmap.length %> modules</span>
+      </header>
+      
+      <div class="module-list">
+        <% result.roadmap.forEach((m, index) => { %>
+          <div class="module-card type-<%= m.type %>" data-title="<%= m.title %>">
+            <div class="module-top">
+              <div class="module-order-circle"><%= m.order %></div>
+              <span class="pill pill-<%= m.type %>"><%= m.type.toUpperCase() %></span>
+              <button class="complete-btn" data-index="<%= index %>" data-hours="<%= m.duration_hours %>" data-title="<%= m.title %>">✓ MARK COMPLETE</button>
+            </div>
+            
+            <h3 class="module-title"><%= m.title %></h3>
+            
+            <div class="module-meta">
+              <span class="module-duration"><%= m.duration_hours %>h</span>
+              <span class="module-difficulty"><%= m.difficulty %></span>
+              <div class="module-skills">
+                <% m.skills_covered.forEach(skill => { %>
+                  <span class="pill-tiny"><%= skill %></span>
+                <% }) %>
+              </div>
+            </div>
+            
+            <button class="why-toggle">↓ Why this module?</button>
+            <div class="reason-panel">
+              <p class="reason-text"><%= m.reason %></p>
+            </div>
+          </div>
+        <% }) %>
+
+        <% if(result.roadmap.length === 0) { %>
+          <div class="empty-state">No modules required! You are fully equipped for this role.</div>
+        <% } %>
+      </div>
+    </section>
+
+    <!-- Middle Column -->
+    <section class="bento-col bento-middle">
+      
+      <!-- Top: Skill Gap Breakdown -->
+      <div class="bento-card bento-subcard card-gap">
+        <h2 class="card-title">SKILL GAP BREAKDOWN</h2>
+        
+        <div class="gap-row row-mastered">
+          <div class="gap-row-header">
+            <span class="gap-label">MASTERED</span>
+            <span class="gap-count"><%= result.gap_object ? result.gap_object.known.length : 0 %></span>
+          </div>
+          <div class="gap-pills">
+            <% if(result.gap_object) { result.gap_object.known.forEach(skill => { %>
+              <span class="skill-pill pill-mastered"><%= skill %></span>
+            <% }) } %>
+            <% if(!result.gap_object || result.gap_object.known.length===0) { %><span class="pill-muted">None detected</span><% } %>
+          </div>
+        </div>
+
+        <div class="gap-row row-refresher">
+          <div class="gap-row-header">
+            <span class="gap-label">REFRESHER NEEDED</span>
+            <span class="gap-count"><%= result.gap_object ? result.gap_object.partial.length : 0 %></span>
+          </div>
+          <div class="gap-pills">
+            <% if(result.gap_object) { result.gap_object.partial.forEach(skill => { %>
+              <span class="skill-pill pill-refresher"><%= skill %></span>
+            <% }) } %>
+            <% if(!result.gap_object || result.gap_object.partial.length===0) { %><span class="pill-muted">None</span><% } %>
+          </div>
+        </div>
+
+        <div class="gap-row row-must-learn">
+          <div class="gap-row-header">
+            <span class="gap-label">MUST LEARN</span>
+            <span class="gap-count"><%= result.gap_object ? result.gap_object.missing.length : 0 %></span>
+          </div>
+          <div class="gap-pills">
+            <% if(result.gap_object) { result.gap_object.missing.forEach(skill => { %>
+              <span class="skill-pill pill-must-learn"><%= skill %></span>
+            <% }) } %>
+            <% if(!result.gap_object || result.gap_object.missing.length===0) { %><span class="pill-muted">None</span><% } %>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom: Activity Feed -->
+      <div class="bento-card bento-subcard card-feed">
+        <header class="card-header">
+          <h2 class="card-title">LIVE ACTIVITY <span class="live-dot"></span></h2>
+        </header>
+        <div class="activity-list" id="activityFeed">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+
+    </section>
+
+    <!-- Right Column: Readiness Meter -->
+    <section class="bento-col bento-right bento-card card-meter">
+      
+      <div class="meter-wrapper">
+        <svg class="ring-svg" width="220" height="220" viewBox="0 0 220 220">
+          <circle class="ring-bg" cx="110" cy="110" r="90"></circle>
+          <circle class="ring-progress" cx="110" cy="110" r="90"></circle>
+        </svg>
+        <div class="meter-center">
+          <div class="meter-value"><span class="readiness-number-ring">0</span>%</div>
+          <div class="meter-label">ROLE READINESS</div>
+        </div>
+      </div>
+
+      <div class="candidate-skills-list">
+        <h3 class="subsection-title">CONFIDENCE SCORES</h3>
+        <% result.candidate_skills.forEach(skill => { %>
+          <div class="skill-meter-row">
+            <div class="skill-meter-meta">
+              <span class="skill-meter-name"><%= skill.name %></span>
+              <span class="skill-meter-score"><%= skill.confidence %>%</span>
+            </div>
+            <div class="skill-meter-bg">
+              <div class="skill-meter-fill" data-width="<%= skill.confidence %>"></div>
+            </div>
+          </div>
+        <% }) %>
+      </div>
+      
+      <div class="meter-footer">
+        <span class="pill pill-muted"><%= result.candidate_skills.length %> skills assessed</span>
+      </div>
+
+    </section>
+
+  </main>
+
+</div>
+
+<script>
+  // Expose EJS JSON exactly as requested strings
+  const RESULT_DATA = <%- JSON.stringify(result) %>;
+  let BASE_SCORE  = <%= result.readiness_score %>;
+  const TOTAL_MODULES = <%= result.roadmap.length %>;
+</script>
+<script src="/js/results.js"></script>

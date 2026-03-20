@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Role Ready ai</title>
+    <link rel="stylesheet" href="/css/global.css">
+    <% if (typeof page !== 'undefined' && page !== 'layout') { %>
+        <link rel="stylesheet" href="/css/<%= page %>.css">
+    <% } %>
+</head>
+<body id="page-content" class="page-enter">
+    
+    <nav id="navbar">
+        <a href="/" class="nav-logo">Role Ready<span> ai</span></a>
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="/demo">Demo</a>
+            <a href="/catalog">Catalog</a>
+            <a href="/about">About</a>
+        </div>
+        <a href="/analyze" class="nav-cta">Analyze Profile</a>
+    </nav>
+
+    <main>
+        <%- body %>
+    </main>
+
+    <script src="/js/cursor.js" defer></script>
+    <script src="/js/animations.js" defer></script>
+    <% if (typeof page !== 'undefined') { %>
+        <script src="/js/<%= page %>.js" defer></script>
+    <% } %>
+</body>
+</html>

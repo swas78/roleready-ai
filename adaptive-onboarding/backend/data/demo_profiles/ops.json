@@ -1,0 +1,65 @@
+{
+    "candidate_skills": [
+        {"name": "AWS", "years": 2, "confidence": 85, "context": "Deployed web applications"},
+        {"name": "Linux Server", "years": 3, "confidence": 90, "context": "Managed Ubuntu servers"},
+        {"name": "Bash", "years": 3, "confidence": 80, "context": "Wrote automation scripts"}
+    ],
+    "required_skills": [
+        "SAP EWM", "Lean Six Sigma", "KPI Analytics", "Hazmat Handling"
+    ],
+    "gap_object": {
+        "known": [],
+        "partial": [],
+        "missing": ["SAP EWM", "Lean Six Sigma", "KPI Analytics", "Hazmat Handling"]
+    },
+    "readiness_score": 45,
+    "roadmap": [
+        {
+            "module_id": "c_ops_001",
+            "title": "SAP EWM Warehouse Management Certification",
+            "duration_hours": 45,
+            "type": "new",
+            "order": 1,
+            "reason": "The Job Description explicitly requires SAP EWM, which were not detected in your resume. Note: Mastery of SAP EWM relies on understanding WMS Basics.",
+            "skills_covered": ["SAP EWM", "WMS Basics"],
+            "domain": "ops",
+            "level": "advanced"
+        },
+        {
+            "module_id": "c_ops_002",
+            "title": "Lean Six Sigma Yellow Belt",
+            "duration_hours": 12,
+            "type": "new",
+            "order": 2,
+            "reason": "The Job Description explicitly requires Lean Six Sigma, which were not detected in your resume.",
+            "skills_covered": ["Lean Six Sigma", "Lean"],
+            "domain": "ops",
+            "level": "intermediate"
+        },
+        {
+            "module_id": "c_ops_003",
+            "title": "Operational KPI Analytics & Dashboarding",
+            "duration_hours": 10,
+            "type": "new",
+            "order": 3,
+            "reason": "The Job Description explicitly requires KPI Analytics, which were not detected in your resume.",
+            "skills_covered": ["KPI Analytics", "KPI"],
+            "domain": "ops",
+            "level": "intermediate"
+        },
+        {
+            "module_id": "c_ops_004",
+            "title": "Certified Hazmat Handling and Logistics",
+            "duration_hours": 5,
+            "type": "new",
+            "order": 4,
+            "reason": "The Job Description explicitly requires Hazmat Handling, which were not detected in your resume.",
+            "skills_covered": ["Hazmat Handling", "Hazmat"],
+            "domain": "ops",
+            "level": "advanced"
+        }
+    ],
+    "time_saved_hours": 48,
+    "domain": "ops",
+    "initials": "CO"
+}

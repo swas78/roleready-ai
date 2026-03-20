@@ -1,0 +1,65 @@
+{
+    "candidate_skills": [
+        {"name": "React", "years": 5, "confidence": 95, "context": "Lead frontend micro-app migration"},
+        {"name": "Node.js", "years": 5, "confidence": 90, "context": "Built backend REST services"},
+        {"name": "Python Basics", "years": 3, "confidence": 85, "context": "Scripting and automation"}
+    ],
+    "required_skills": [
+        "React Fundamentals", "FastAPI", "Kubernetes", "CI/CD", "System Design"
+    ],
+    "gap_object": {
+        "known": [{"name": "React", "years": 5, "confidence": 95}],
+        "partial": [{"name": "System Design", "years": 1, "confidence": 60}],
+        "missing": ["FastAPI", "Kubernetes", "CI/CD"]
+    },
+    "readiness_score": 72,
+    "roadmap": [
+        {
+            "module_id": "c_tech_004",
+            "title": "Scalable System Design Architecture",
+            "duration_hours": 30,
+            "type": "refresher",
+            "order": 1,
+            "reason": "You have some experience with System Design, but an advanced refresher is recommended to meet JD parity.",
+            "skills_covered": ["System Design", "Advanced Performance Patterns", "GraphQL Federation"],
+            "domain": "tech",
+            "level": "advanced"
+        },
+        {
+            "module_id": "c_tech_001",
+            "title": "Mastering FastAPI & Async Python",
+            "duration_hours": 15,
+            "type": "new",
+            "order": 2,
+            "reason": "The Job Description explicitly requires FastAPI, which were not detected in your resume. Note: Mastery of FastAPI relies on understanding Python Advanced, REST APIs.",
+            "skills_covered": ["FastAPI", "Python Advanced", "REST APIs"],
+            "domain": "tech",
+            "level": "advanced"
+        },
+        {
+            "module_id": "c_tech_002",
+            "title": "Kubernetes and Container Orchestration",
+            "duration_hours": 20,
+            "type": "new",
+            "order": 3,
+            "reason": "The Job Description explicitly requires Kubernetes, which were not detected in your resume. Note: Mastery of Kubernetes relies on understanding Docker.",
+            "skills_covered": ["Kubernetes", "Docker"],
+            "domain": "tech",
+            "level": "advanced"
+        },
+        {
+            "module_id": "c_tech_003",
+            "title": "Modern CI/CD Pipelines with GitHub Actions",
+            "duration_hours": 8,
+            "type": "new",
+            "order": 4,
+            "reason": "The Job Description explicitly requires CI/CD, which were not detected in your resume. Note: Mastery of CI/CD relies on understanding Docker, Linux CLI.",
+            "skills_covered": ["CI/CD"],
+            "domain": "tech",
+            "level": "intermediate"
+        }
+    ],
+    "time_saved_hours": 47,
+    "domain": "tech",
+    "initials": "SM"
+}

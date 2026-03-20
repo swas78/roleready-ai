@@ -1,0 +1,159 @@
+.bg-grid {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.analyze-container {
+    padding-top: 120px;
+    padding-bottom: 80px;
+    min-height: 100vh;
+}
+
+.analyze-form {
+    display: flex;
+    gap: 60px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 60px;
+    position: relative;
+    z-index: 1;
+}
+
+.upload-col { flex: 0 0 55%; }
+.persona-col { flex: 0 0 calc(45% - 60px); }
+
+.col-title {
+    font-family: var(--font-display);
+    font-size: 24px;
+    margin-bottom: 32px;
+}
+
+.form-group {
+    margin-bottom: 24px;
+}
+.form-group label {
+    display: block;
+    margin-bottom: 12px;
+    font-weight: 500;
+    font-size: 14px;
+    color: var(--text-secondary);
+}
+
+.drop-zone {
+    border: 2px dashed var(--border);
+    background: rgba(255,255,255,0.02);
+    border-radius: var(--radius-card);
+    padding: 32px 24px;
+    text-align: center;
+    transition: all 0.3s;
+    cursor: pointer;
+    position: relative;
+}
+.drop-zone.dragover {
+    border-color: var(--accent-lime);
+    background: rgba(200, 255, 0, 0.05);
+}
+.drop-text { color: var(--text-secondary); }
+.drop-text .lime { color: var(--accent-lime); text-decoration: underline; }
+.file-info { margin-top: 8px; font-family: var(--font-mono); font-size: 12px; color: var(--text-primary); }
+
+.jd-textarea {
+    width: 100%;
+    height: 100px;
+    margin-top: 12px;
+    background: rgba(0,0,0,0.2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px;
+    color: white;
+    font-family: var(--font-body);
+    resize: vertical;
+}
+.jd-textarea:focus { outline: none; border-color: var(--accent-purple); }
+
+.radio-pills { display: flex; gap: 12px; flex-wrap: wrap; }
+.radio-pill input { display: none; }
+.radio-pill span {
+    display: inline-block;
+    padding: 8px 16px;
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 14px;
+}
+.radio-pill input:checked + span {
+    background: white;
+    color: var(--bg);
+    border-color: white;
+}
+
+.btn-analyze {
+    width: 100%;
+    padding: 16px;
+    border-radius: var(--radius-btn);
+    background: white;
+    color: var(--bg);
+    border: none;
+    font-family: var(--font-display);
+    font-size: 18px;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 16px;
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+}
+.btn-analyze:hover {
+    transform: scale(1.02);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.5), 0 0 15px rgba(200,255,0,0.3);
+}
+.btn-analyze.loading .btn-text { opacity: 0; }
+.btn-analyze.loading .btn-loader {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 20px; height: 20px;
+    border: 3px solid rgba(0,0,0,0.2);
+    border-top-color: var(--bg);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+@keyframes spin { to { transform: translate(-50%, -50%) rotate(360deg); } }
+
+.persona-cards { display: flex; flex-direction: column; gap: 16px; }
+.persona-card {
+    display: flex; gap: 16px;
+    padding: 20px;
+    background: rgba(0,0,0,0.3);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-card);
+    cursor: pointer;
+    transition: all 0.3s;
+}
+.persona-card:hover {
+    border-color: var(--accent-purple);
+    box-shadow: 0 0 20px rgba(83,74,183,0.3);
+}
+.persona-card.selected {
+    border-color: var(--accent-lime);
+    box-shadow: 0 0 20px rgba(200,255,0,0.2);
+}
+
+.card-icon {
+    width: 48px; height: 48px; flex-shrink: 0;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-family: var(--font-display);
+}
+.sr-icon { background: rgba(83,74,183,0.2); color: #8F87F3; }
+.fr-icon { background: rgba(29,158,117,0.2); color: #3bebc2; }
+.op-icon { background: rgba(255,77,0,0.2); color: #ff8b54; }
+
+.card-info h3 { font-size: 16px; margin-bottom: 6px; }
+.card-info p { font-size: 13px; color: var(--text-secondary); line-height: 1.4; }

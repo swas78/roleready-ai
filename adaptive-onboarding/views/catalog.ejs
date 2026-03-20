@@ -1,0 +1,78 @@
+<link rel="stylesheet" href="/css/catalog.css">
+
+<div class="catalog-page">
+  <header class="top-bar">
+    <a href="/" class="btn-back">← Back</a>
+    <h1 class="logo">Course Catalog</h1>
+    <div class="top-bar-right">
+      <span class="pill pill-muted"><%= total || (courses || []).length %> courses</span>
+    </div>
+  </header>
+
+  <section class="catalog-hero">
+    <h1 class="hero-title">FIXED COURSE CATALOG</h1>
+    <p class="hero-subtitle">The AI picks only from these courses. Zero invented content.</p>
+  </section>
+
+  <section class="catalog-controls">
+    <input type="text" id="catalog-search" class="search-bar" placeholder="🔍 Search courses, skills, or domain...">
+    <div class="summary-strip">
+      <span class="stat-highlight"><span id="result-count"><%= total || (courses || []).length %></span> total courses</span>
+      <span class="stat-dot">·</span>
+      <% const currentCourses = courses || []; %>
+      <span class="stat-highlight"><span><%= currentCourses.filter(c => (c.domain || '').toLowerCase() === 'tech').length %></span> tech</span>
+      <span class="stat-dot">·</span>
+      <span class="stat-highlight"><span><%= currentCourses.filter(c => (c.domain || '').toLowerCase() === 'ops').length %></span> ops</span>
+      <span class="stat-dot">·</span>
+      <span class="stat-highlight"><span><%= currentCourses.filter(c => !c.domain || (c.domain).toLowerCase() === 'shared').length %></span> shared</span>
+    </div>
+  </section>
+
+  <main class="table-container">
+    <table class="catalog-table">
+      <thead>
+        <tr>
+          <th>COURSE TITLE</th>
+          <th>DOMAIN</th>
+          <th>DURATION</th>
+          <th>DIFFICULTY</th>
+          <th>SKILLS</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if(courses && courses.length > 0) {
+            courses.forEach(course => { 
+               const diffStr = (course.difficulty || 'intermediate').toLowerCase();
+               const domainStr = (course.domain || 'shared').toUpperCase();
+               const skillsCount = (course.skills_covered || []).length;
+               const duration = course.duration_hours || 0;
+        %>
+        <tr class="catalog-row">
+          <td class="cell-title"><%= course.title || 'Untitled Course' %></td>
+          <td class="cell-domain"><span class="pill pill-<%= domainStr.toLowerCase() %>"><%= domainStr %></span></td>
+          <td class="cell-duration"><%= duration %>h</td>
+          <td class="cell-difficulty">
+            <div class="difficulty-dots">
+              <% const levels = {beginner:1, intermediate:2, advanced:4, expert:5};
+                 const filled = levels[diffStr] || 2;
+                 for(let i=1;i<=5;i++) { %>
+                <span class="dot <%= i<=filled ? 'filled' : '' %>"></span>
+              <% } %>
+            </div>
+          </td>
+          <td class="cell-skills">
+            <span class="skills-count-pill"><%= skillsCount %> skills</span>
+            <span class="skills-hidden" style="display:none;"><%= (course.skills_covered || []).join(', ') %></span>
+          </td>
+        </tr>
+        <%  });
+           } else { %>
+        <tr>
+          <td colspan="5" class="empty-state">No catalog data available.</td>
+        </tr>
+        <% } %>
+      </tbody>
+    </table>
+  </main>
+</div>
+<script src="/js/catalog.js"></script>

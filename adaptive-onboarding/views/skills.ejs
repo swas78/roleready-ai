@@ -1,0 +1,85 @@
+<link rel="stylesheet" href="/css/skills.css">
+
+<div class="skills-page">
+  <!-- TOP BAR -->
+  <header class="top-bar">
+    <a href="/" class="btn-back">← Back</a>
+    <h1 class="logo">Skill Graph</h1>
+    <div class="top-bar-right">
+      <span class="pill pill-muted"><%= catalog.courses ? catalog.courses.length : 0 %> courses</span>
+      <span class="pill pill-muted"><%= catalog.courses ? catalog.courses.reduce((acc, c) => acc + (c.skills_covered || []).length, 0) : 0 %> skills</span>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="skills-hero">
+    <h1 class="hero-title">THE KNOWLEDGE GRAPH</h1>
+    <p class="hero-subtitle">Every skill node, prerequisite chain, and course mapping — fully transparent.<br>No hallucinations. Every course is real.</p>
+    <div class="hero-stats">
+      <span class="stat-highlight"><%= catalog.courses ? catalog.courses.length : 0 %> courses in catalog</span>
+      <span class="stat-dot">·</span>
+      <span class="stat-highlight"><%= catalog.courses ? catalog.courses.reduce((acc, c) => acc + (c.skills_covered || []).length, 0) : 0 %> skills mapped</span>
+      <span class="stat-dot">·</span>
+      <span class="stat-highlight">zero hallucinations guaranteed</span>
+    </div>
+  </section>
+
+  <!-- DOMAIN FILTER TABS -->
+  <section class="filter-section">
+    <div class="filter-tabs">
+      <button class="filter-tab active" data-domain="all">ALL</button>
+      <button class="filter-tab" data-domain="tech">TECH</button>
+      <button class="filter-tab" data-domain="ops">OPS</button>
+      <button class="filter-tab" data-domain="shared">SHARED</button>
+    </div>
+  </section>
+
+  <!-- COURSE GRID -->
+  <main class="course-grid">
+    <% if(catalog.courses && catalog.courses.length > 0) {
+        catalog.courses.forEach(course => { 
+          const domainStr = (course.domain || 'shared').toLowerCase();
+          const duration = course.duration_hours || 0;
+          const diffStr = (course.difficulty || 'intermediate').toLowerCase();
+    %>
+        <div class="course-card" data-domain="<%= domainStr %>">
+          <div class="card-header">
+            <span class="pill pill-<%= domainStr %>"><%= domainStr.toUpperCase() %></span>
+            <span class="pill pill-muted"><%= duration %>h</span>
+          </div>
+          <h2 class="course-title"><%= course.title || 'Untitled Course' %></h2>
+          <hr class="card-divider">
+          
+          <div class="card-section">
+            <div class="section-label">SKILLS COVERED</div>
+            <div class="skill-pills">
+              <% (course.skills_covered || []).forEach(skill => { %>
+                <span class="skill-pill"><%= skill %></span>
+              <% }) %>
+              <% if((course.skills_covered || []).length === 0) { %>
+                <span class="skill-pill">None listed</span>
+              <% } %>
+            </div>
+          </div>
+          
+          <div class="card-section diff-section">
+            <div class="section-label">DIFFICULTY</div>
+            <div class="difficulty-dots-wrapper">
+              <div class="difficulty-dots">
+                <% const levels = {beginner:1, intermediate:2, advanced:4, expert:5};
+                   const filled = levels[diffStr] || 2;
+                   for(let i=1;i<=5;i++) { %>
+                  <span class="dot <%= i<=filled ? 'filled' : '' %>"></span>
+                <% } %>
+                <span class="diff-label"><%= diffStr %></span>
+              </div>
+            </div>
+          </div>
+        </div>
+    <%  });
+       } else { %>
+       <div class="empty-state">No courses loaded from backend.</div>
+    <% } %>
+  </main>
+</div>
+<script src="/js/skills.js"></script>

@@ -1,0 +1,79 @@
+<div class="bg-grid"></div>
+<div class="container analyze-container" data-reveal>
+    <form action="/analyze" method="POST" enctype="multipart/form-data" id="analyze-form" class="analyze-form">
+        <div class="upload-col">
+            <h2 class="col-title">Input Profile Data</h2>
+            
+            <div class="form-group">
+                <label>Resume (PDF/DOCX)</label>
+                <div class="drop-zone" id="resume-drop">
+                    <span class="drop-text">Drag & Drop or <span class="lime">Browse</span></span>
+                    <input type="file" name="resume" id="resume-input" accept=".pdf,.doc,.docx" hidden>
+                    <div class="file-info"></div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Job Description</label>
+                <div class="drop-zone" id="jd-drop">
+                    <span class="drop-text">Drag & Drop JD File or <span class="lime">Paste Below</span></span>
+                    <input type="file" name="jdFile" id="jd-input" accept=".pdf,.doc,.docx,.txt" hidden>
+                    <div class="file-info"></div>
+                </div>
+                <textarea name="jdText" class="jd-textarea" placeholder="Paste JD here..."></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Domain Focus</label>
+                <div class="radio-pills">
+                    <label class="radio-pill">
+                        <input type="radio" name="domain" value="frontend" checked>
+                        <span>Frontend</span>
+                    </label>
+                    <label class="radio-pill">
+                        <input type="radio" name="domain" value="backend">
+                        <span>Backend</span>
+                    </label>
+                    <label class="radio-pill">
+                        <input type="radio" name="domain" value="devops">
+                        <span>DevOps</span>
+                    </label>
+                </div>
+            </div>
+
+            <button type="submit" class="btn-analyze" id="submit-btn" data-hover>
+                <span class="btn-text">Generate Learning Path</span>
+                <span class="btn-loader"></span>
+            </button>
+        </div>
+
+        <div class="persona-col">
+            <h2 class="col-title">Or Choose a Demo Persona</h2>
+            <input type="hidden" name="demo" id="demo-input" value="">
+            
+            <div class="persona-cards">
+                <div class="persona-card" data-key="senior" data-hover>
+                    <div class="card-icon sr-icon">SR</div>
+                    <div class="card-info">
+                        <h3>Senior Frontend Lead</h3>
+                        <p>Transitioning to Fullstack Architecture. Deep React skills, needs System Design.</p>
+                    </div>
+                </div>
+                <div class="persona-card" data-key="fresher" data-hover>
+                    <div class="card-icon fr-icon">JR</div>
+                    <div class="card-info">
+                        <h3>Junior Developer</h3>
+                        <p>Recent grad aiming for Mid-level. Needs advanced DSA and UI/UX polish.</p>
+                    </div>
+                </div>
+                <div class="persona-card" data-key="ops" data-hover>
+                    <div class="card-icon op-icon">OP</div>
+                    <div class="card-info">
+                        <h3>Cloud Ops Engineer</h3>
+                        <p>Shifting to Platform Engineering. Needs Go programming and Kubernetes internals.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,71 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Syne:wght@400;600;700;800&display=swap');
+
+:root {
+  --bg:             #0a0a0f;
+  --bg-card:        #111118;
+  --bg-hover:       #16161f;
+  --border:         rgba(255,255,255,0.07);
+  --border-bright:  rgba(255,255,255,0.14);
+  --lime:           #c8ff00;
+  --purple:         #534AB7;
+  --coral:          #ff6b6b;
+  --text-primary:   #f0f0f0;
+  --text-secondary: #888;
+  --text-muted:     #444;
+  --font-display:   'Syne', sans-serif;
+  --font-mono:      'DM Mono', monospace;
+}
+
+body { margin: 0; background-color: var(--bg); color: var(--text-primary); font-family: var(--font-mono); -webkit-font-smoothing: antialiased; }
+
+/* TOP BAR (Standard) */
+.top-bar { position: sticky; top: 0; z-index: 100; height: 56px; display: flex; align-items: center; justify-content: space-between; padding: 0 40px; background: rgba(10,10,15,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
+.btn-back { text-decoration: none; font-size: 12px; color: var(--text-secondary); transition: color 0.2s; }
+.btn-back:hover { color: var(--text-primary); }
+.logo { font-family: var(--font-display); font-weight: 600; font-size: 18px; margin: 0; color: var(--text-primary); flex: 1; text-align: center; }
+
+.about-content { max-width: 1000px; margin: 0 auto; padding: 0 40px; }
+
+/* HERO */
+.about-hero { padding: 80px 0 64px; border-bottom: 0.5px solid var(--border); max-width: 800px; }
+.about-hero h1 { font-family: var(--font-display); font-size: clamp(40px, 6vw, 72px); font-weight: 800; line-height: 1.05; color: var(--text-primary); letter-spacing: -0.02em; margin: 0 0 24px 0; }
+.about-hero h1 span { color: var(--lime); }
+.about-hero p { font-family: var(--font-mono); font-size: 15px; color: var(--text-secondary); line-height: 1.7; max-width: 520px; margin: 0; }
+
+/* SECTIONS */
+.about-section { padding: 64px 0; border-bottom: 0.5px solid var(--border); }
+.section-badge { display: inline-block; font-size: 10px; color: var(--text-muted); letter-spacing: 0.1em; border: 1px solid var(--border); padding: 4px 12px; border-radius: 12px; margin-bottom: 32px; }
+
+/* PROBLEM STATS */
+.stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.problem-stat { background: var(--bg-card); border: 0.5px solid var(--border); border-radius: 12px; padding: 28px; position: relative; overflow: hidden; }
+.problem-stat .big-num { font-family: var(--font-display); font-size: 56px; font-weight: 800; color: var(--lime); line-height: 1; margin-bottom: 8px; }
+.problem-stat .stat-desc { font-family: var(--font-mono); font-size: 12px; color: var(--text-secondary); line-height: 1.5; }
+
+/* HOW IT WORKS */
+.steps-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--border); border: 0.5px solid var(--border); border-radius: 12px; overflow: hidden; }
+.step { background: var(--bg-card); padding: 28px 24px; position: relative; }
+.step-num { font-family: var(--font-mono); font-size: 10px; color: var(--text-muted); letter-spacing: 0.1em; margin-bottom: 12px; }
+.step-title { font-family: var(--font-display); font-size: 18px; font-weight: 700; color: var(--text-primary); margin: 0 0 8px 0; }
+.step-desc { font-family: var(--font-mono); font-size: 11px; color: var(--text-secondary); line-height: 1.6; margin: 0; }
+
+/* DIFFERENTIATORS */
+.diff-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.differentiator-card { padding: 24px 0; border-top: 2px solid var(--border-bright); }
+.differentiator-card h3 { font-family: var(--font-display); font-size: 20px; color: var(--text-primary); margin: 0 0 12px 0; }
+.differentiator-card p { font-size: 13px; color: var(--text-secondary); line-height: 1.6; margin: 0; }
+
+/* STACK */
+.stack-pills { display: flex; flex-wrap: wrap; gap: 8px; }
+.stack-pill { font-family: var(--font-mono); font-size: 11px; padding: 6px 14px; border-radius: 6px; border: 0.5px solid var(--border-bright); color: var(--text-secondary); background: var(--bg-card); transition: border-color 0.2s ease, color 0.2s ease; }
+.stack-pill:hover { border-color: var(--lime); color: var(--lime); }
+
+/* FOOTER */
+.about-footer { padding: 64px 0; text-align: center; }
+.footer-credit { font-size: 11px; color: var(--text-muted); line-height: 1.6; text-transform: uppercase; letter-spacing: 0.05em; }
+
+/* RESPONSIVE */
+@media(max-width: 900px) {
+  .stats-grid, .steps-row, .diff-grid { grid-template-columns: 1fr; }
+  .steps-row { gap: 1px; border: 1px solid var(--border); }
+}

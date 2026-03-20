@@ -1,0 +1,88 @@
+.analyzing-container {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    background: var(--bg);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 50;
+    transition: transform 0.8s cubic-bezier(0.85, 0, 0.15, 1), opacity 0.8s;
+}
+
+.analyzing-container.slide-up {
+    transform: translateY(-100%);
+    opacity: 0;
+}
+
+.orbits {
+    position: absolute;
+    width: 600px; height: 600px;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+}
+
+.orbit {
+    position: absolute;
+    top: 50%; left: 50%;
+    border-radius: 50%;
+    border: 1px dashed rgba(255,255,255,0.1);
+    transform: translate(-50%, -50%);
+}
+
+.orbit::before {
+    content: '';
+    position: absolute;
+    top: -3px; left: 50%;
+    width: 6px; height: 6px;
+    background: var(--accent-lime);
+    border-radius: 50%;
+    box-shadow: 0 0 10px var(--accent-lime);
+}
+
+.orbit-1 { width: 300px; height: 300px; animation: spin 20s linear infinite; }
+.orbit-2 { width: 450px; height: 450px; animation: spin 35s linear infinite reverse; border-color: rgba(83,74,183,0.3); }
+.orbit-2::before { background: var(--accent-purple); box-shadow: 0 0 10px var(--accent-purple); }
+.orbit-3 { width: 600px; height: 600px; animation: spin 50s linear infinite; }
+
+.content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+}
+
+#status-text {
+    font-family: var(--font-display);
+    font-size: 32px;
+    margin-bottom: 40px;
+    min-width: 400px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.pipeline {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+}
+
+.step {
+    width: 40px; height: 4px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 2px;
+    position: relative;
+    overflow: hidden;
+}
+
+.step::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; bottom: 0;
+    width: 0%;
+    background: var(--accent-lime);
+    transition: width 0.4s;
+}
+
+.step.active::after { width: 100%; transition: width 2s linear; }
+.step.done::after { width: 100%; transition: none; }
