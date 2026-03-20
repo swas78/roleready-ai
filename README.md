@@ -223,18 +223,4 @@ docker-compose up --build
 
 ---
 
-## Judging Criteria Coverage
-
-| Criterion | Weight | How RoleReady AI addresses it |
-|---|---|---|
-| Technical quality + accuracy | 20% | SBERT semantic matching, LLaMA 3.1 parsing, validated pipeline |
-| Communication + docs | 20% | This README, demo video, 5-slide deck |
-| User experience | 15% | Bento dashboard, live readiness meter, visual roadmap |
-| Zero hallucinations | 15% | Fixed 30-course catalog — AI never invents a course name |
-| Cross-domain ability | 10% | Tech (engineer) and Ops (warehouse) profiles both supported |
-| Product impact | 10% | Hours saved metric shown per profile vs 40h generic onboarding |
-| Reasoning trace | 10% | Every module shows plain-language explanation in UI |
-
----
-
 Built for IISc Bangalore Hackathon 2025 — Adaptive Onboarding Challenge
