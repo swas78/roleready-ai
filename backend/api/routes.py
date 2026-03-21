@@ -91,7 +91,7 @@ async def analyze_profile(request: Request, payload: AnalyzeRequest):
     ordered_skills = topological_sort(skills_to_learn)
 
     # 5. Planner
-    roadmap = build_roadmap(ordered_skills, embedder, payload.domain, gap_object)
+    roadmap = await build_roadmap(ordered_skills, embedder, payload.domain, gap_object)
 
     # 6. Tracer
     roadmap_with_reasons = attach_reasons(roadmap, gap_object, candidate_skills, required_skills)

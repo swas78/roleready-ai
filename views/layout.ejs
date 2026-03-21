@@ -11,6 +11,7 @@
 </head>
 <body id="page-content" class="page-enter">
     
+    <% if (page === 'landing' || page === 'analyze' || page === 'analyzing' || page === '404') { %>
     <nav id="navbar">
         <a href="/" class="nav-logo">Role Ready<span> ai</span></a>
         <div class="nav-links">
@@ -22,6 +23,7 @@
         </div>
         <a href="/analyze" class="nav-cta">Analyze Profile</a>
     </nav>
+    <% } %>
 
     <main>
         <%- body %>
