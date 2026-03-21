@@ -7,6 +7,7 @@
     <a href="/analyze" class="btn-back">← New Analysis</a>
     <h1 class="logo">RoleReady AI</h1>
     <div class="top-bar-right">
+      <a href="/skills" class="btn-back" style="margin-right: 15px;">Explore Skill Graph →</a>
       <span class="pill pill-domain"><%= result.domain.toUpperCase() %></span>
       <span class="pill pill-readiness"><span class="readiness-number-pill"><%= result.readiness_score %></span>% READINESS</span>
     </div>
@@ -97,7 +98,7 @@
           </div>
           <div class="gap-pills">
             <% if(result.gap_object) { result.gap_object.known.forEach(skill => { %>
-              <span class="skill-pill pill-mastered"><%= skill %></span>
+              <span class="skill-pill pill-mastered"><%= skill.name %></span>
             <% }) } %>
             <% if(!result.gap_object || result.gap_object.known.length===0) { %><span class="pill-muted">None detected</span><% } %>
           </div>
@@ -110,7 +111,7 @@
           </div>
           <div class="gap-pills">
             <% if(result.gap_object) { result.gap_object.partial.forEach(skill => { %>
-              <span class="skill-pill pill-refresher"><%= skill %></span>
+              <span class="skill-pill pill-refresher"><%= skill.name %></span>
             <% }) } %>
             <% if(!result.gap_object || result.gap_object.partial.length===0) { %><span class="pill-muted">None</span><% } %>
           </div>
@@ -183,7 +184,8 @@
 
 <script>
   // Expose EJS JSON exactly as requested strings
-  const RESULT_DATA = <%- JSON.stringify(result) %>;
+  // SANITIZED JSON for XSS prevention
+  const RESULT_DATA = <%- JSON.stringify(result).replace(/</g, '\\u003c').replace(/>/g, '\\u003e') %>;
   let BASE_SCORE  = <%= result.readiness_score %>;
   const TOTAL_MODULES = <%= result.roadmap.length %>;
 </script>

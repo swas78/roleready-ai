@@ -1,6 +1,7 @@
 <div class="bg-grid"></div>
 <div class="container analyze-container" data-reveal>
     <form action="/analyze" method="POST" enctype="multipart/form-data" id="analyze-form" class="analyze-form">
+        <input type="hidden" name="_csrf" value="<%= locals.csrfToken %>">
         <div class="upload-col">
             <h2 class="col-title">Input Profile Data</h2>
             

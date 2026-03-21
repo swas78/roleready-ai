@@ -1,6 +1,7 @@
 import os
 import json
 import logging
+import asyncio
 from groq import AsyncGroq
 from api.schemas import ExtractedSkill
 
@@ -13,6 +14,7 @@ load_dotenv()
 # Re-use client
 client = AsyncGroq(api_key=os.getenv("GROQ_API_KEY", "your_key"))
 MODEL = os.getenv("LLM_MODEL", "llama-3.1-8b-instant")
+MAX_RETRIES = 3
 
 async def parse_resume(text: str) -> list[ExtractedSkill]:
     prompt = f"""
@@ -32,23 +34,34 @@ async def parse_resume(text: str) -> list[ExtractedSkill]:
     Text: {text}
     """
     
-    try:
-        completion = await client.chat.completions.create(
-            model=MODEL,
-            messages=[{"role": "user", "content": prompt}],
-            temperature=0.1
-        )
-        content = completion.choices[0].message.content
-        if "```json" in content:
-            content = content.split("```json")[1].split("```")[0].strip()
-        elif "```" in content:
-            content = content.split("```")[1].strip()
-            
-        data = json.loads(content)
-        return [ExtractedSkill(**item) for item in data]
-    except Exception as e:
-        logger.error(f"Failed to parse resume: {e}")
-        return []
+    for attempt in range(MAX_RETRIES):
+        try:
+            completion = await client.chat.completions.create(
+                model=MODEL,
+                messages=[{"role": "user", "content": prompt}],
+                temperature=0.1
+            )
+            content = completion.choices[0].message.content
+            if not content:
+                raise ValueError("Empty response received from LLM")
+                
+            if "```json" in content:
+                content = content.split("```json")[1].split("```")[0].strip()
+            elif "```" in content:
+                content = content.split("```")[1].strip()
+                
+            data = json.loads(content)
+            if not isinstance(data, list):
+                raise ValueError(f"Expected a JSON list, got {type(data).__name__}")
+                
+            return [ExtractedSkill(**item) for item in data]
+        except Exception as e:
+            logger.warning(f"Failed to parse resume (attempt {attempt + 1}/{MAX_RETRIES}): {e}")
+            if attempt < MAX_RETRIES - 1:
+                await asyncio.sleep(1)
+            else:
+                logger.error(f"All retries failed for parse_resume: {e}")
+                return []
 
 async def parse_jd(text: str) -> list[str]:
     prompt = f"""
@@ -58,20 +71,31 @@ async def parse_jd(text: str) -> list[str]:
     Text: {text}
     """
     
-    try:
-        completion = await client.chat.completions.create(
-            model=MODEL,
-            messages=[{"role": "user", "content": prompt}],
-            temperature=0.1
-        )
-        content = completion.choices[0].message.content
-        if "```json" in content:
-            content = content.split("```json")[1].split("```")[0].strip()
-        elif "```" in content:
-            content = content.split("```")[1].strip()
+    for attempt in range(MAX_RETRIES):
+        try:
+            completion = await client.chat.completions.create(
+                model=MODEL,
+                messages=[{"role": "user", "content": prompt}],
+                temperature=0.1
+            )
+            content = completion.choices[0].message.content
+            if not content:
+                raise ValueError("Empty response received from LLM")
             
-        data = json.loads(content)
-        return [str(s) for s in data]
-    except Exception as e:
-        logger.error(f"Failed to parse JD: {e}")
-        return []
+            if "```json" in content:
+                content = content.split("```json")[1].split("```")[0].strip()
+            elif "```" in content:
+                content = content.split("```")[1].strip()
+                
+            data = json.loads(content)
+            if not isinstance(data, list):
+                raise ValueError(f"Expected a JSON list, got {type(data).__name__}")
+                
+            return [str(s) for s in data]
+        except Exception as e:
+            logger.warning(f"Failed to parse JD (attempt {attempt + 1}/{MAX_RETRIES}): {e}")
+            if attempt < MAX_RETRIES - 1:
+                await asyncio.sleep(1)
+            else:
+                logger.error(f"All retries failed for parse_jd: {e}")
+                return []

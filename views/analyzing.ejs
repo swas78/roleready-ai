@@ -52,7 +52,10 @@
     <div class="analyze-error hidden" style="display:none; z-index:10;">
         <h3>Error Occurred</h3>
         <p class="error-msg"></p>
-        <a href="/analyze">Return to Analysis</a>
+        <div style="margin-top: 16px; display: flex; gap: 10px; justify-content: center;">
+            <button onclick="window.location.reload()" style="padding: 10px 20px; background: #8338ec; color: white; border: none; border-radius: 4px; cursor: pointer;">Retry Analysis</button>
+            <a href="/analyze">Return to Analysis</a>
+        </div>
     </div>
 </div>
 

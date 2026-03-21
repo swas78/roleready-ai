@@ -18,7 +18,9 @@ router.post('/', upload.fields([{ name: 'resume' }, { name: 'jdFile' }]), (req, 
     try {
         let resumeText = req.body.resumeText || "";
         let jdText = req.body.jdText || "";
-        const domain = req.body.domain || "tech";
+        const rawDomain = (req.body.domain || "tech").toLowerCase();
+        const validDomains = ["frontend", "backend", "fullstack", "devops", "cloud", "data", "ml", "ops", "tech", "shared"];
+        const domain = validDomains.includes(rawDomain) ? rawDomain : "tech";
         const demoKey = req.body.demo || null;
 
         if (req.files) {

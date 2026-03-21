@@ -4,7 +4,7 @@ from typing import List, Literal, Optional
 class AnalyzeRequest(BaseModel):
     resume_text: str = Field(..., min_length=50)
     jd_text: str = Field(..., min_length=30)
-    domain: Literal["tech", "ops"]
+    domain: Literal["frontend", "backend", "fullstack", "devops", "cloud", "data", "ml", "ops", "tech", "shared"]
 
 class ExtractedSkill(BaseModel):
     name: str
@@ -27,6 +27,7 @@ class RoadmapModule(BaseModel):
     skills_covered: List[str]
     domain: str
     level: str
+    difficulty: str = "medium"
 
 class AnalyzeResponse(BaseModel):
     candidate_skills: List[ExtractedSkill]
