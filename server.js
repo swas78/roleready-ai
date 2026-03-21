@@ -25,13 +25,12 @@ app.use(session({
     cookie: {
         maxAge: 3600000, // 1 hour
         secure: process.env.NODE_ENV === 'production', // Only send over HTTPS in production
-        httpOnly: true, // Prevent XSS access to session cookie
-        sameSite: 'strict' // Prevent CSRF attacks
+        httpOnly: true // Prevent XSS access to session cookie
     }
 }));
 
-// CSRF protection middleware
-app.use(csrfProtection());
+// CSRF protection middleware using cookies
+app.use(csrfProtection({ cookie: true }));
 
 // Middleware to pass CSRF token to all templates
 app.use((req, res, next) => {
